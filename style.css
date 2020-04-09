@@ -73,7 +73,7 @@ body{
     background-color:#fff;
     box-shadow:0px 2px 1px -1px rgba(0, 0, 0, 0.2),0px 1px 1px 0px rgba(0, 0, 0, 0.14),0px 1px 3px 0px rgba(0,0,0,.12);
     display:flex;
-    flex-direction:row;
+    flex-direction:column;
     box-sizing:border-box;
 }
 
@@ -99,18 +99,19 @@ body{
 
 .card-label{
     background-color:#f5f5f5;
-    height:56px;
+    height:46px;
     border-radius:4px 4px 0 0;
     display:inline-flex;
     position:relative;
-    box-sizing:border-box;    
+    box-sizing:border-box;
 }
 
 .card-input{
     border-bottom-color: rgba(0,0,0,.42);
     color: rgba(0,0,0,.87);
-    font-size:1rem;
+    font-size:1.4rem;
     font-weight:400;
+    line-height:2rem;
     letter-spacing: .009375em;
     text-align:center;
     text-decoration: inherit;
@@ -140,4 +141,49 @@ body{
 
 .card-break{
     width:40%;
+}
+
+.card-mid{
+    padding-top:16px;
+    padding-left:16px;
+    padding-right:16px;
+    box-sizing:border-box;
+    display:flex;
+    justify-content: center;
+}
+
+.card-bottom{
+    padding:16px;
+    box-sizing:border-box;
+    display:flex;
+    flex-direction:row;
+    justify-content: center;
+}
+
+.card-button{
+    color:#6200ee;
+    background-color:transparent;
+    margin-left:0;
+    margin-right:8px;
+    padding: 0 8px;
+    cursor:pointer;
+    height: 36px;
+    font-family: Roboto, sans-serif;
+    font-size: .875rem;
+    font-weight: 500;
+    text-decoration:none;
+    position:relative;
+    min-width:64px;
+    border: 1px solid transparent;
+    border-color:#6200ee;
+    outline:none;
+    line-height:0.5rem;
+    border-radius:4px;
+    transition: background 0.8s;
+}
+
+.card-button:hover{
+ background: #6200ee radial-gradient(circle, transparent 1%, #6200ee 1%) center/15000%;
+ color: #fff;
+ box-shadow:0px 3px 1px -2px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 1px 5px 0px rgba(0,0,0,.12);
 }
