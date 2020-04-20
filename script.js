@@ -1,6 +1,8 @@
-var btnStart = document.querySelector('.start-button');
-var inputSession = document.querySelector('#session-input');
+const btnStart = document.querySelector('.start-button');
+const btnReset = document.querySelector('.reset-button');
+const inputSession = document.querySelector('#session-input');
 let labelTimer = document.querySelector('.timer');
+let timerInterval = 0;
 
 let userMinutes = 0;
 let count = 1;
@@ -11,7 +13,7 @@ let userBreak = 0;
 function startTimer(duration, display){
     let timer = duration, minutes, seconds;
      count ++;
-    setInterval(function () {
+    timerInterval = setInterval(() => {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
             
@@ -30,12 +32,21 @@ function startTimer(duration, display){
     }, 1000);
     }
         
-btnStart.addEventListener('click', function(){
+btnStart.addEventListener('click', () =>{
     userMinutes = 60 * document.querySelector('#session-input').value;
     display = document.querySelector('.timer')
     startTimer(userMinutes, display);
 })
 
-inputSession.addEventListener('keyup', function(){
+inputSession.addEventListener('keyup', () =>{
     labelTimer.textContent = inputSession.value + ':00';
 })
+
+btnReset.addEventListener('click',() =>{
+    timerReset();
+    labelTimer.textContent = inputSession.value + ':00';
+});
+
+timerReset = () =>{
+    clearInterval(timerInterval);
+    }
