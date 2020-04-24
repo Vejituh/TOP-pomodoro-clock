@@ -1,52 +1,66 @@
 const btnStart = document.querySelector('.start-button');
 const btnReset = document.querySelector('.reset-button');
+const btnPause = document.querySelector('.pause-button');
+const btnStop = document.querySelector('.stop-button');
 const inputSession = document.querySelector('#session-input');
-let labelTimer = document.querySelector('.timer');
-let timerInterval = 0;
+const breakSession = document.querySelector('#break-input');
+const displayMinutes = document.querySelector(".display-minutes");
+const displaySeconds = document.querySelector(".display-seconds");
+let isPaused = false;
+let onBreak = false;
 
-let userMinutes = 0;
-let count = 1;
-let userBreak = 0;
+timerReset = () =>{
+    clearInterval(timerInterval);
+    };
 
+function updateDisplay(minutes, seconds) {
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+  displayMinutes.textContent = minutes;
+  displaySeconds.textContent = seconds;
+  document.title = `${minutes}:${seconds}`;
+}
 
+let timerInterval;
 
-function startTimer(duration, display){
-    let timer = duration, minutes, seconds;
-     count ++;
-    timerInterval = setInterval(() => {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
-            
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-        display.textContent = minutes + ':' + seconds;
-            
-        if(--timer < 0 && count%2 == 0 ){
-            userBreak = 60 * document.querySelector('#break-input').value;
-            timer = userBreak;
-            count++
-        } else if (--timer < 0 && !count%2 == 0){
-            timer = userMinutes;
-            count++
+function startTimer(){
+        let countdown = 
+        parseInt(displayMinutes.textContent * 60) +
+        parseInt(displaySeconds.textContent);
+        onBreak = true;
+        timerInterval = setInterval( () => {
+            countdown --;
+         updateDisplay(parseInt(countdown / 60, 10), parseInt(countdown % 60, 10));
+         if (isPaused) {
+             return;
+         } 
+         if (countdown === 0){
+             if(onBreak) {
+                  countdown = inputSession.value * 60 + 1;
+                  onBreak = false;
+             } else {
+                 countdown = breakSession.value * 60 + 1;
+                 onBreak = true;
+             }
+         }
+        }, 1000);
         }
-    }, 1000);
-    }
         
-btnStart.addEventListener('click', () =>{
-    userMinutes = 60 * document.querySelector('#session-input').value;
-    display = document.querySelector('.timer')
-    startTimer(userMinutes, display);
-})
+btnStart.addEventListener('click', startTimer);
 
 inputSession.addEventListener('keyup', () =>{
-    labelTimer.textContent = inputSession.value + ':00';
+    displayMinutes.textContent = inputSession.value;
 })
 
 btnReset.addEventListener('click',() =>{
     timerReset();
-    labelTimer.textContent = inputSession.value + ':00';
+    displayMinutes.textContent = inputSession.value;
+    displaySeconds.textContent = '00';
 });
 
-timerReset = () =>{
-    clearInterval(timerInterval);
-    }
+btnPause.addEventListener('click', timerReset);
+
+btnStop.addEventListener('click',() => {
+        timerReset();
+    displayMinutes.textContent = inputSession.value;
+    displaySeconds.textContent = '00';
+});
